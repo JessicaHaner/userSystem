@@ -5,5 +5,5 @@ form.addEventListener("submit", function(event){
     event.preventDefault();
     Object.fromEntries([...form.elements].filter(element => element.id).map(element => [element.id, element.value]));
 
-
-});
+    form.reset();
+}); 
