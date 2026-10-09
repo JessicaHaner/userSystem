@@ -51,7 +51,7 @@ form.addEventListener("submit", function(event){
 
     form.reset();
 }); 
-
+// criar opções de seleção dinamicamente 
 function adicionarOpcao(select, texto, valor) {
     select.add(new Option(texto, valor));
 }
@@ -66,5 +66,16 @@ async function carregarEstados () {
         estados.forEach(item => adicionarOpcao(estado, item.nome, item.sigla));
     } catch (erro){}
 }
+estado.addEventListener("change", async function () {
+    cidade.replaceChild(new Option("carregando cidades...", ""));
+    cidade.disnable = true; 
+    if (!estado.value) {
+        cidade.replaceChild(new Option ("Selecione o estado primeiro", ""));
+        return;
+    }
+    try {
+        const resposta = await fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estado.value}/municipios`);
+    }
+});
 
 carregarEstados();
